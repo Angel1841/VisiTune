@@ -6,7 +6,9 @@ target/
 
 .DS_Store
 src/main/java/com/example/spotifyapidashboard/model/enums/KEYS.java
-application.properties
+
+src/main/resources/application.properties
+
 
 ### STS ###
 .apt_generated
