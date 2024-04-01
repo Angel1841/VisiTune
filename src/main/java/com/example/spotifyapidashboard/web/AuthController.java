@@ -22,7 +22,7 @@ public class AuthController {
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/api/get-user-code");
     private String code = "";
 
-    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+    public static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(KEYS.CLIENT_ID.getKey())
             .setClientSecret(KEYS.CLIENT_SECRET.getKey())
             .setRedirectUri(redirectUri)
@@ -40,13 +40,15 @@ public class AuthController {
 
     }
 
-    @GetMapping(value = "get-user-code")
-    public void getSpotifyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException {
+    @GetMapping("/get-user-code")
+    public String getSpotifyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException {
         code = userCode;
+
         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
                 .build();
 
         try {
+
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
 
             // Set access and refresh token for further "spotifyApi" object usage
@@ -57,9 +59,10 @@ public class AuthController {
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        System.out.println(spotifyApi.getAccessToken());
+
+        //System.out.println(spotifyApi.getAccessToken());
         response.sendRedirect("http://localhost:3000/top-artists");
-//        return spotifyApi.getAccessToken();
+        return spotifyApi.getAccessToken();
     }
 }
 

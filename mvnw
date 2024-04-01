@@ -23,7 +23,7 @@
 #
 # Required ENV vars:
 # ------------------
-#   JAVA_HOME - location of a JDK home.html dir
+#   JAVA_HOME - location of a JDK login.html dir
 #
 # Optional ENV vars
 # -----------------
